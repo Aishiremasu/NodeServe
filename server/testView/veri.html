@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="js/jquery-1.12.4.js"></script>-->
+
+</head>
+<body>
+<form action="http://127.0.0.1:3000/Handler/AdminHandler">
+    <input type="text" name="action" value="checkveri" style="display: none">
+    <input type="text" name="veri">
+    <input type="submit" value="验证">
+</form>
+<!-- <form action="http://127.0.0.1:3000/Handler/AdminLogin?action=login" method="post"> -->
+    <!--<input type="text" name="action" value="login" style="display: none">-->
+    <!-- <input type="text" name="username">
+    <input type="submit" value="登录">
+</form> -->
+
+<!--<input type="text" id="txt" />
+<button id="btn">提交</button>
+<script>
+    $(function () {
+        function data(result){
+            console.log(result);
+
+        }
+        $("#btn").click(function () {
+            $.ajax({
+                url:"http://127.0.0.1:3000/Handler/AdminHandler?action=checkveri",
+                type:"get",
+                dataType:"jsonp",
+                data:{
+                    veri:$("txt").val()
+                },
+                async:false,
+                // jsonpCallback:"data"
+
+            }).done(function (result) {
+                console.log(result);
+            })
+        });
+
+
+
+    });
+
+
+</script>-->
+</body>
+</html>
