@@ -1,6 +1,6 @@
-1.��������npm start
-2.���Ҫдע���¼�ӿ�����Ҫʹ�õ�MongoDB���ݿⴢ���û���Ϣ
-3.����Ҫ�õ����ݿ����֤��ӿڣ�http://127.0.0.1:3000/Handler/AdminHandler?action=veri      ��������հױ�ǩҳֱ������Ϳ��Է�����֤��
-	         ��֤��֤��ӿڣ�http://127.0.0.1:3000/Handler/AdminHandler?action=checkveri       
-			   	����form���������������֤�룬����Ŀ��ĸȫ�Ǵ�д��������֤Сд����ĸ����Ҫ����ϰд�ӿ�ûд��ô���ϸ�ڣ�
-4.�ӿڴ����߼���index.js  
+﻿1.启动命令npm start
+2.如果要写注册登录接口则需要使用到MongoDB数据库储存用户信息
+3.不需要用到数据库的验证码接口：http://127.0.0.1:3000/Handler/AdminHandler?action=veri      在浏览器空白标签页直接输入就可以返回验证码
+	         验证验证码接口：http://127.0.0.1:3000/Handler/AdminHandler?action=checkveri       
+			   	可用form表单传输输入的验证码，本项目字母全是大写，不能验证小写的字母（主要是练习写接口没写那么多的细节）
+4.接口处理逻辑在index.js  

@@ -5,13 +5,13 @@ var path = require("path");
 //调用express方法
 var app = express();
 //链接数据库
-var db = require("./modul/db");
+// var db = require("./modul/db");
 //执行接口文件
 var index =require("./index");
 //后期保存信息
 // var session = require("express-session");
 //路由  接口的跳转
-var router = require("express-router");
+// var router = require("express-router");
 //处理post请求
 var bodyparser = require("body-parser");
 var cookie = require("cookie-parser");
@@ -27,7 +27,6 @@ app.use(flash());
     "cookie":{maxAge:90000},    //最大储存数量
     saveUninitialized:false,     //是否保存为初始化的内容
 }));*/
-
 
 app.use(cookie());
 //处理post请求   处理json数据

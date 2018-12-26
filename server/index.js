@@ -47,11 +47,11 @@ router.post("/AdminLogin", function (req, res) {
     switch (actions) {
         case "login":
             var mdlogin = crypto.createHash("md5");
-            var password = mdlogin.update(req.body.password).digest("base64");
-            db.find("userData", "login", { "username": req.body.username }, function (err, data) {
+            var password = mdlogin.update(req.body.body.password).digest("base64");
+            db.find("userData", "login", { "username": req.body.body.username }, function (err, data) {
                 var a = 0;
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].username == req.body.username) {
+                    if (data[i].username == req.body.body.username) {
                         a = i;
                     }
                 }
@@ -112,33 +112,34 @@ router.post("/AdminLogin", function (req, res) {
              *  权限编码 0 1
              * */
             //加密
+            // console.log(req.body)
             var md5 = crypto.createHash("md5");
-            var password = md5.update(req.body.password).digest("base64");
+            var password = md5.update(req.body.body.password).digest("base64");
             var tokenId = 0;
             db.find("userData", "login", {}, function (err, data) {
                 tokenId = data.length
                 console.log(tokenId)
 
                 // console.log(password);
-                db.find("userData", "login", { "username": req.body.username }, function (err, data) {
+                db.find("userData", "login", { "username": req.body.body.username }, function (err, data) {
                     if (data.length != 0) {
                         res.send({ "err": "此用户名已被注册" });
                     } else {
                         var regPhone = new RegExp(/^1[34578]\d{9}$/);  //手机号码
                         var regMailbox = new RegExp(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/);  //邮箱正则
-                        // console.log(regPhone.test(req.body.phone))
-                        if (regPhone.test(req.body.phone) == false) {
-                            res.send({ "err": "请输入正确的电话" });
-                        } else if (regMailbox.test(req.body.mailbox) == false) {
-                            res.send({ "err": "请输入正确的邮箱" });
-                        } else {
+                        // console.log(regPhone.test(req.body.body.phone))
+                        // if (regPhone.test(req.body.body.phone) == false) {
+                        //     res.send({ "err": "请输入正确的电话" });
+                        // } else if (regMailbox.test(req.body.body.mailbox) == false) {
+                        //     res.send({ "err": "请输入正确的邮箱" });
+                        // } else {
                             db.add("userData", "login", {
-                                "username": req.body.username,
-                                "name": req.body.name,
-                                "phone": req.body.phone,
+                                "username": req.body.body.username,
+                                "name": req.body.body.name,
+                                "phone": req.body.body.phone,
                                 "password": password,
-                                "mailbox": req.body.mailbox,
-                                "identity": req.body.identity,
+                                "mailbox": req.body.body.mailbox,
+                                "identity": req.body.body.identity,
                                 "updateAt": new Date(),
                                 "tokenId": tokenId
                             }, function (err, data) {
@@ -146,7 +147,7 @@ router.post("/AdminLogin", function (req, res) {
                                 res.send({ "success": "注册成功" });
                             })
                         }
-                    }
+                    // }
                 })
 
             });
@@ -155,7 +156,7 @@ router.post("/AdminLogin", function (req, res) {
             /*
             * 更改密码
             * */
-            // console.log(req.body);
+            // console.log(req.body.body);
             // 登陆后修改密码
             /*if (req.flash.user) {
                 var sessionId = new objectId(req.flash.user._id);
@@ -163,15 +164,15 @@ router.post("/AdminLogin", function (req, res) {
                     res.send({"success": "获取成功", "data": data})
                 });
             }*/
-            db.find("userData", "login", { "username": req.body.username }, function (err, data) {
+            db.find("userData", "login", { "username": req.body.body.username }, function (err, data) {
                 var mdOld = crypto.createHash("md5");
-                var oldpassword = mdOld.update(req.body.oldpassword).digest("base64");
+                var oldpassword = mdOld.update(req.body.body.oldpassword).digest("base64");
                 var mdNew = crypto.createHash("md5");
-                var newpassword = mdNew.update(req.body.newpassword).digest("base64");
+                var newpassword = mdNew.update(req.body.body.newpassword).digest("base64");
                 var a = 0;
                 var dataLen = data.length;
                 for (var i = 0; i < dataLen; i++) {
-                    if (data[i].username == req.body.username) {
+                    if (data[i].username == req.body.body.username) {
                         a = i;
                     }
                 }
@@ -183,7 +184,7 @@ router.post("/AdminLogin", function (req, res) {
                     db.update(
                         "userData",
                         "login",
-                        { "username": req.body.username },
+                        { "username": req.body.body.username },
                         { "password": newpassword },
                         function (err, data) {
                             res.send({ result: "密码修改成功" });
@@ -196,11 +197,11 @@ router.post("/AdminLogin", function (req, res) {
             * 删除账号
             * */
             var mdloginC = crypto.createHash("md5");
-            var passwordC = mdloginC.update(req.body.password).digest("base64");
-            db.find("userData", "login", { "username": req.body.username }, function (err, data) {
+            var passwordC = mdloginC.update(req.body.body.password).digest("base64");
+            db.find("userData", "login", { "username": req.body.body.username }, function (err, data) {
                 var a = 0;
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].username == req.body.username) {
+                    if (data[i].username == req.body.body.username) {
                         a = i;
                     }
                 }
@@ -213,7 +214,7 @@ router.post("/AdminLogin", function (req, res) {
                         /** 
                         * 删除账号操作
                         * */
-                        db.del("userData", "login", { "username": req.body.username }, function (err, data) {
+                        db.del("userData", "login", { "username": req.body.body.username }, function (err, data) {
                             res.send({ "result": "账号删除成功" });
                         })
                     }
@@ -221,13 +222,13 @@ router.post("/AdminLogin", function (req, res) {
             });
             break;
         case "userList":
-            // console.log(req.body.pageStart)
+            // console.log(req.body.body.pageStart)
             db.find("userData", "login", {}, function (err, adata) {
-                // var pageStart = req.body.pageStart<adata.length?req.body.pageStart:1;
-                var selector = !req.body.searchTxt ? {
+                // var pageStart = req.body.body.pageStart<adata.length?req.body.body.pageStart:1;
+                var selector = !req.body.body.searchTxt ? {
                     tokenId: {
-                        $gte: parseInt(req.body.pageStart) * 3 - 3,
-                        $lt: parseInt(req.body.pageStart) * 3
+                        $gte: parseInt(req.body.body.pageStart) * 3 - 3,
+                        $lt: parseInt(req.body.body.pageStart) * 3
                     }
                 } : req.query.searchTxt;
                 db.find("userData", "login", {}, function (err, allData) {
@@ -259,10 +260,10 @@ router.post("/AdminLogin", function (req, res) {
             break;
         case "delete":
             /* 删除数据库的数据 */
-            db.del("userData", "login", { "tokenId": req.body.tokenId }, function (err, data) {
+            db.del("userData", "login", { "tokenId": req.body.body.tokenId }, function (err, data) {
                 var tokenIdGt = {
                     tokenId: {
-                        $gt: req.body.tokenId
+                        $gt: req.body.body.tokenId
                     }
                 }
                 db.find("userData", "login", tokenIdGt, function (err, data) {
